@@ -1,29 +1,86 @@
-import type { Metadata } from "next"
-import { Poppins } from "next/font/google"
+import type { Metadata, Viewport } from "next"
+import { Inter } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
-const poppins = Poppins({ 
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-poppins",
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-inter",
 })
 
+const SITE_URL = "https://www.lowesdiscounts.com"
+const SITE_NAME = "Lowe's Discounts"
+const TITLE = "The Lowe's Discounts They Don't Advertise"
+const DESCRIPTION =
+  "Discover how shoppers are unlocking hidden discount codes on tools, garden gear, paint, and home fixtures. Complete 5+ deals in five simple steps and get your discount delivered straight to your inbox."
+
 export const metadata: Metadata = {
-  title: "Lowe's Method",
-  description: "Discover how people are unlocking up to $750 in Lowe's rewards. Complete simple steps and claim your gift card today.",
+  metadataBase: new URL(SITE_URL),
+  title: TITLE,
+  description: DESCRIPTION,
+  applicationName: SITE_NAME,
+  keywords: [
+    "Lowe's discount code",
+    "Lowe's promo code",
+    "Lowe's discounts",
+    "Lowe's deals",
+    "Lowe's rewards program",
+    "tools and hardware deals",
+    "lawn and garden deals",
+    "paint and home refresh deals",
+    "smart home and fixture deals",
+  ],
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  category: "shopping",
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   generator: "v0.app",
   openGraph: {
     type: "website",
-    title: "Lowe's Method",
-    description: "Unlock up to $750 in Lowe's rewards with a simple process.",
-    siteName: "Lowe's Method",
+    url: SITE_URL,
+    title: TITLE,
+    description: DESCRIPTION,
+    siteName: SITE_NAME,
+    locale: "en_US",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1024,
+        height: 1024,
+        alt: "A cordless drill, a toolbox of hand tools, a potted plant with a garden trowel and watering can, a paint can with roller and color swatches, a smart thermostat, and a chrome faucet floating on a navy blue background",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lowe's Method",
-    description: "Unlock up to $750 in Lowe's rewards with a simple process.",
+    title: TITLE,
+    description: DESCRIPTION,
+    images: ["/og-image.png"],
   },
+  other: {
+    "apple-mobile-web-app-title": SITE_NAME,
+  },
+}
+
+export const viewport: Viewport = {
+  themeColor: "#003A73",
+  colorScheme: "light",
+  width: "device-width",
+  initialScale: 1,
 }
 
 export default function RootLayout({
@@ -32,10 +89,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="bg-background">
-      <body className={`${poppins.variable} ${poppins.className} antialiased`}>
+    <html lang="en" className="bg-white">
+      <body className={`${inter.variable} font-sans antialiased`}>
         {children}
-        {process.env.NODE_ENV === "production" && <Analytics />}
+        <Analytics />
       </body>
     </html>
   )
